@@ -1,0 +1,22 @@
+{
+	"$schema": "https://ui.shadcn.com/schema/registry.json",
+	"name": "acme",
+	"homepage": "https://acme.com",
+	"items": [
+		{
+			"name": "stateful-button",
+			"title": "Stateful Button",
+			"description": "Stateful Button description.",
+			"author": "Fabio Somaglia",
+			"type": "registry:component",
+			"registryDependencies": ["button"],
+			"files": [
+				{
+					"path": "registry/new-york/ui/stateful-button/stateful-button.tsx",
+					"type": "registry:component",
+					"target": "~/components/ui/stateful-button.tsx"
+				}
+			]
+		}
+	]
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry-item.json",
+  "name": "stateful-button",
+  "type": "registry:component",
+  "title": "Stateful Button",
+  "author": "Fabio Somaglia",
+  "description": "Stateful Button description.",
+  "registryDependencies": [
+    "button"
+  ],
+  "files": [
+    {
+      "path": "registry/new-york/ui/stateful-button/stateful-button.tsx",
+      "content": "import { Button } from '@/components/ui/button';\n\nexport function StatefulButton() {\n\treturn <Button>Stateful Button</Button>;\n}\n",
+      "type": "registry:component",
+      "target": "~/components/ui/stateful-button.tsx"
+    }
+  ]
+}
