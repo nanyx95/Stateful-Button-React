@@ -9,7 +9,8 @@
 			"description": "Stateful Button description.",
 			"author": "Fabio Somaglia",
 			"type": "registry:component",
-			"registryDependencies": ["button"],
+			"registryDependencies": ["button", "progress"],
+			"dependencies": ["xstate", "@xstate/react"],
 			"files": [
 				{
 					"path": "registry/new-york/ui/stateful-button/stateful-button.tsx",
