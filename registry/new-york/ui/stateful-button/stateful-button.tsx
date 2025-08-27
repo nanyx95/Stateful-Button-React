@@ -152,7 +152,15 @@ type ProgressButtonProps = BaseProps & {
 	progress: number;
 };
 
-export type StatefulButtonProps = BaseProps & (SpinnerButtonProps | ProgressButtonProps);
+type AriaMessages = {
+	loading?: string;
+	progress?: (value: number) => string;
+	success?: string;
+	error?: string;
+};
+
+export type StatefulButtonProps = BaseProps &
+	(SpinnerButtonProps | ProgressButtonProps) & { ariaMessages?: AriaMessages };
 
 const StatefulButton: React.FC<StatefulButtonProps> = ({
 	buttonType = 'spinner',
@@ -164,6 +172,7 @@ const StatefulButton: React.FC<StatefulButtonProps> = ({
 	className,
 	variant,
 	size,
+	ariaMessages,
 	...props
 }) => {
 	const [snapshot, send] = useMachine(statefulButtonMachine, {
@@ -193,21 +202,61 @@ const StatefulButton: React.FC<StatefulButtonProps> = ({
 		}
 	};
 
+	const defaultAriaMessages: Required<AriaMessages> = {
+		loading: 'Loading, please wait',
+		progress: (value: number) => {
+			const roundedValue = Math.round(value / 25) * 25;
+			return `${roundedValue}%`;
+		},
+		success: 'Completed successfully',
+		error: 'An error occurred'
+	};
+	const ariaMsg = { ...defaultAriaMessages, ...ariaMessages };
+
+	const loadingContent = (
+		<>
+			<LoaderCircle className="animate-spin" aria-hidden="true" />
+			<span className="sr-only">{ariaMsg.loading}</span>
+		</>
+	);
+	const progressContent = (
+		<>
+			<Progress value={snapshot.context.progress} className={cn(progressVariants({ variant }))} />
+			<span className="sr-only">{ariaMsg.progress(snapshot.context.progress)}</span>
+		</>
+	);
+	const successContent = (
+		<>
+			<Check aria-hidden="true" />
+			<span role="status" className="sr-only">
+				{ariaMsg.success}
+			</span>
+		</>
+	);
+	const errorContent = (
+		<>
+			<X aria-hidden="true" />
+			<span role="status" className="sr-only">
+				{ariaMsg.error}
+			</span>
+		</>
+	);
+
 	return (
 		<Button
 			variant={variant}
 			className={cn(buttonVariants({ size, className }))}
 			onClick={handleClick}
 			disabled={!snapshot.matches('idle')}
+			aria-busy={snapshot.matches('loading') || snapshot.matches('progress')}
+			aria-live="polite"
 			{...props}
 		>
 			{snapshot.matches('idle') && children}
-			{snapshot.matches('loading') && <LoaderCircle className="animate-spin" />}
-			{snapshot.matches('progress') && (
-				<Progress value={snapshot.context.progress} className={cn(progressVariants({ variant }))} />
-			)}
-			{snapshot.matches('success') && <Check />}
-			{snapshot.matches('error') && <X />}
+			{snapshot.matches('loading') && loadingContent}
+			{snapshot.matches('progress') && progressContent}
+			{snapshot.matches('success') && successContent}
+			{snapshot.matches('error') && errorContent}
 		</Button>
 	);
 };
