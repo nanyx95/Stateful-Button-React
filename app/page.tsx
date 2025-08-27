@@ -3,6 +3,7 @@
 import { ModeToggle } from '@/components/mode-toggle';
 import StatefulButton from '@/registry/new-york/ui/stateful-button/stateful-button';
 import useProgress from '@/hooks/use-progress';
+import { ComponentPreview } from '@/components/component-preview';
 
 export default function Home() {
 	const { progress, startProgress } = useProgress();
@@ -35,9 +36,8 @@ export default function Home() {
 					</p>
 				</header>
 				<main className="flex flex-1 flex-col gap-8">
-					<div className="relative flex min-h-[450px] flex-col gap-4 rounded-lg border p-4">
-						<h2 className="text-sm text-muted-foreground sm:pl-3">Stateful Button with loading and success state</h2>
-						<div className="relative flex min-h-[400px] items-center justify-center">
+					<ComponentPreview
+						preview={
 							<StatefulButton
 								buttonType="spinner"
 								onClick={async () => {
@@ -49,8 +49,19 @@ export default function Home() {
 							>
 								Load
 							</StatefulButton>
-						</div>
-					</div>
+						}
+						code={`<StatefulButton
+  buttonType="spinner"
+  onClick={async () => {
+    console.log('clicked');
+    await loadingSuccessTest();
+  }}
+  onComplete={() => console.log('completed')}
+  onError={(error) => console.error(error)}
+>
+  Load
+</StatefulButton>`}
+					/>
 
 					<div className="relative flex min-h-[450px] flex-col gap-4 rounded-lg border p-4">
 						<h2 className="text-sm text-muted-foreground sm:pl-3">Stateful Button with loading and error state</h2>
