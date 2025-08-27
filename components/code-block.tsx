@@ -6,10 +6,9 @@ import { toJsxRuntime } from 'hast-util-to-jsx-runtime';
 import { Button } from '@/components/ui/button';
 import { Check, Clipboard } from 'lucide-react';
 import { codeToHast, type BundledLanguage, type BundledTheme } from 'shiki';
-
 import { cn } from '@/lib/utils';
 
-export interface CodeBlockProps {
+export type CodeBlockProps = {
 	lang?: BundledLanguage;
 	theme?: BundledTheme;
 	maxHeight?: number;
@@ -18,7 +17,8 @@ export interface CodeBlockProps {
 	className?: string;
 	children: React.ReactNode;
 	showCopy?: boolean;
-}
+	showLineNumbers?: boolean;
+};
 
 /**
  * Syntax Highlights code using Shiki and converts it to JSX elements.
@@ -27,33 +27,35 @@ export interface CodeBlockProps {
  * @param theme - Theme for syntax highlighting.
  * @returns JSX element containing highlighted code.
  */
-
 async function highlightCode(code: string, lang: BundledLanguage, theme: BundledTheme): Promise<JSX.Element> {
 	try {
 		const hast = await codeToHast(code, { lang, theme });
 		return toJsxRuntime(hast, { Fragment, jsx, jsxs }) as JSX.Element;
 	} catch {
-		return <span className="text-zinc-100">{code}</span>;
+		return <span className="text-neutral-100">{code}</span>;
 	}
 }
 
 /**
- * CodeBlock component renders syntax-highlighted code with optional copy-to-clipboard button.
+ * CodeBlock component renders syntax-highlighted code with optional copy-to-clipboard button and line numbers.
  */
 export default function CodeBlock({
-	lang = 'js',
-	theme = 'github-dark', // Default theme github-dark. You can find all available themes at https://shiki.style/themes
+	lang = 'ts',
+	theme = 'github-dark', // Default theme github-dark. You can find all available themes at https://shiki.matsu.io/themes
 	maxHeight,
 	maxWidth,
 	textSize,
 	className,
 	children,
-	showCopy = true
+	showCopy = true,
+	showLineNumbers = true
 }: CodeBlockProps) {
 	const [copied, setCopied] = useState(false);
 	const [highlightedContent, setHighlightedContent] = useState<JSX.Element | null>(null);
 
 	const codeText = typeof children === 'string' ? children : String(children);
+	const lines = codeText.split('\n').length;
+	const lineNumbers = Array.from({ length: lines }, (_, i) => i + 1).join('\n');
 
 	useEffect(() => {
 		let isMounted = true;
@@ -83,10 +85,7 @@ export default function CodeBlock({
 
 	return (
 		<div
-			className={cn(
-				'relative [&_code]:font-mono [&_pre]:overflow-auto [&_pre]:rounded-lg [&_pre]:border [&_pre]:!bg-muted/40 [&_pre]:p-4 [&_pre]:leading-snug',
-				className
-			)}
+			className={cn('relative rounded-lg border bg-muted/40 font-mono leading-snug', className)}
 			style={containerStyle}
 			data-lang={lang}
 		>
@@ -106,30 +105,32 @@ export default function CodeBlock({
 				</Button>
 			)}
 
-			{highlightedContent ? (
-				<div style={{ fontSize: textSize }} className="overflow-auto" data-lang={lang}>
-					<style>
-						{`
-              div[data-lang] pre {
-                max-height: ${maxHeight ?? 'none'}px;
-                overflow: auto;
-              }
-            `}
-					</style>
-					{highlightedContent}
+			<div
+				className="overflow-auto"
+				style={{
+					maxHeight: maxHeight ? `${maxHeight}px` : undefined,
+					fontSize: textSize
+				}}
+			>
+				<div className="flex">
+					{showLineNumbers && (
+						<pre className="p-4 text-right text-neutral-500 select-none">
+							<code>{lineNumbers}</code>
+						</pre>
+					)}
+					<div className="flex-1">
+						{highlightedContent ? (
+							<div className="[&>pre]:!border-none [&>pre]:!bg-transparent [&>pre]:!p-4" data-lang={lang}>
+								{highlightedContent}
+							</div>
+						) : (
+							<pre className="p-4 text-neutral-100">
+								<code>{codeText}</code>
+							</pre>
+						)}
+					</div>
 				</div>
-			) : (
-				<pre
-					className="text-zinc-100"
-					style={{
-						fontSize: textSize,
-						maxHeight: maxHeight ? `${maxHeight}px` : undefined,
-						overflow: maxHeight ? 'auto' : undefined
-					}}
-				>
-					<code>{codeText}</code>
-				</pre>
-			)}
+			</div>
 		</div>
 	);
 }
