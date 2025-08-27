@@ -6,6 +6,8 @@ import { Progress } from '@/components/ui/progress';
 import { Check, X, LoaderCircle } from 'lucide-react';
 import { assign, setup } from 'xstate';
 import { useMachine } from '@xstate/react';
+import { cva, type VariantProps } from 'class-variance-authority';
+import { cn } from '@/lib/utils';
 
 const statefulButtonMachine = setup({
 	types: {
@@ -95,12 +97,50 @@ const statefulButtonMachine = setup({
 	}
 });
 
+const buttonVariants = cva(
+	'w-25 gap-1 relative overflow-hidden disabled:pointer-events-auto disabled:cursor-not-allowed disabled:opacity-100',
+	{
+		variants: {
+			size: {
+				default: 'h-9 px-3.5 py-2 has-[>svg]:px-3',
+				sm: 'h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5',
+				lg: 'h-10 rounded-md px-4.5 has-[>svg]:px-4'
+			}
+		},
+		defaultVariants: {
+			size: 'default'
+		}
+	}
+);
+
+const progressVariants = cva('', {
+	variants: {
+		variant: {
+			default:
+				'bg-neutral-50/20 dark:bg-neutral-900/20 [&>[data-slot=progress-indicator]]:bg-neutral-50 [&>[data-slot=progress-indicator]]:dark:bg-neutral-900',
+			destructive:
+				'bg-neutral-900/20 dark:bg-neutral-50/20 [&>[data-slot=progress-indicator]]:bg-neutral-900 [&>[data-slot=progress-indicator]]:dark:bg-neutral-50',
+			outline:
+				'bg-neutral-900/20 dark:bg-neutral-50/20 [&>[data-slot=progress-indicator]]:bg-neutral-900 [&>[data-slot=progress-indicator]]:dark:bg-neutral-50',
+			secondary:
+				'bg-neutral-900/20 dark:bg-neutral-50/20 [&>[data-slot=progress-indicator]]:bg-neutral-900 [&>[data-slot=progress-indicator]]:dark:bg-neutral-50',
+			ghost:
+				'bg-neutral-900/20 dark:bg-neutral-50/20 [&>[data-slot=progress-indicator]]:bg-neutral-900 [&>[data-slot=progress-indicator]]:dark:bg-neutral-50'
+		}
+	},
+	defaultVariants: {
+		variant: 'default'
+	}
+});
+
 type BaseProps = {
 	onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void | Promise<unknown>;
 	onComplete?: () => void;
 	onError?: (error: Error) => void;
 	children?: React.ReactNode;
-} & React.ButtonHTMLAttributes<HTMLButtonElement>;
+} & React.ButtonHTMLAttributes<HTMLButtonElement> &
+	VariantProps<typeof buttonVariants> &
+	VariantProps<typeof progressVariants>;
 
 type SpinnerButtonProps = BaseProps & {
 	buttonType?: 'spinner';
@@ -121,6 +161,9 @@ const StatefulButton: React.FC<StatefulButtonProps> = ({
 	onError,
 	progress,
 	children,
+	className,
+	variant,
+	size,
 	...props
 }) => {
 	const [snapshot, send] = useMachine(statefulButtonMachine, {
@@ -151,14 +194,17 @@ const StatefulButton: React.FC<StatefulButtonProps> = ({
 	};
 
 	return (
-		<Button onClick={handleClick} disabled={!snapshot.matches('idle')} className="w-24" {...props}>
+		<Button
+			variant={variant}
+			className={cn(buttonVariants({ size, className }))}
+			onClick={handleClick}
+			disabled={!snapshot.matches('idle')}
+			{...props}
+		>
 			{snapshot.matches('idle') && children}
 			{snapshot.matches('loading') && <LoaderCircle className="animate-spin" />}
 			{snapshot.matches('progress') && (
-				<Progress
-					value={snapshot.context.progress}
-					className="bg-neutral-50/20 dark:bg-neutral-900/20 [&>[data-slot=progress-indicator]]:bg-neutral-50 [&>[data-slot=progress-indicator]]:dark:bg-neutral-900"
-				/>
+				<Progress value={snapshot.context.progress} className={cn(progressVariants({ variant }))} />
 			)}
 			{snapshot.matches('success') && <Check />}
 			{snapshot.matches('error') && <X />}

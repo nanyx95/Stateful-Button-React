@@ -104,6 +104,29 @@ export default function Home() {
 							</StatefulButton>
 						</div>
 					</div>
+
+					<div className="relative flex min-h-[450px] flex-col gap-4 rounded-lg border p-4">
+						<h2 className="text-sm text-muted-foreground sm:pl-3">
+							Stateful Button with progress, success state, and variants
+						</h2>
+						<div className="relative flex min-h-[400px] items-center justify-center">
+							<StatefulButton
+								variant="outline"
+								size="lg"
+								className="w-28"
+								buttonType="progress"
+								onClick={async () => {
+									console.log('clicked');
+									await startProgress(7, 100);
+								}}
+								onComplete={() => console.log('completed')}
+								onError={(error) => console.error(error)}
+								progress={progress}
+							>
+								Progress
+							</StatefulButton>
+						</div>
+					</div>
 				</main>
 			</div>
 		</>
