@@ -8,6 +8,7 @@ import { assign, setup } from 'xstate';
 import { useMachine } from '@xstate/react';
 import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
+import { motion, AnimatePresence, useReducedMotion, type Transition } from 'motion/react';
 
 const statefulButtonMachine = setup({
 	types: {
@@ -182,6 +183,8 @@ const StatefulButton: React.FC<StatefulButtonProps> = ({
 		}
 	});
 
+	const shouldReduceMotion = useReducedMotion();
+
 	React.useEffect(() => {
 		if (buttonType === 'progress' && typeof progress === 'number') {
 			send({ type: 'setProgress', progress });
@@ -242,6 +245,10 @@ const StatefulButton: React.FC<StatefulButtonProps> = ({
 		</>
 	);
 
+	const slideTransition: Transition = { duration: shouldReduceMotion ? 0.1 : 0.2, ease: 'easeOut' };
+	const fadeTransition: Transition = { duration: shouldReduceMotion ? 0.05 : 0.15, ease: 'linear' };
+	const reducedY = shouldReduceMotion ? 20 : 80;
+
 	return (
 		<Button
 			variant={variant}
@@ -252,11 +259,72 @@ const StatefulButton: React.FC<StatefulButtonProps> = ({
 			aria-live="polite"
 			{...props}
 		>
-			{snapshot.matches('idle') && children}
-			{snapshot.matches('loading') && loadingContent}
-			{snapshot.matches('progress') && progressContent}
-			{snapshot.matches('success') && successContent}
-			{snapshot.matches('error') && errorContent}
+			<AnimatePresence mode="wait" initial={false}>
+				{snapshot.matches('idle') && (
+					<motion.div
+						key="idle"
+						initial={{ y: `-${reducedY}%`, opacity: 0 }}
+						animate={{ y: 0, opacity: 1 }}
+						exit={{ y: `-${reducedY}%`, opacity: 0 }}
+						transition={slideTransition}
+						className="flex items-center gap-1"
+					>
+						{children}
+					</motion.div>
+				)}
+
+				{snapshot.matches('loading') && (
+					<motion.div
+						key="loading"
+						initial={{ y: `${reducedY}%`, opacity: 0 }}
+						animate={{ y: 0, opacity: 1 }}
+						exit={{ opacity: 0 }}
+						transition={slideTransition}
+						className="flex items-center gap-1"
+					>
+						{loadingContent}
+					</motion.div>
+				)}
+
+				{snapshot.matches('progress') && (
+					<motion.div
+						key="progress"
+						initial={{ y: `${reducedY}%`, opacity: 0 }}
+						animate={{ y: 0, opacity: 1 }}
+						exit={{ opacity: 0 }}
+						transition={slideTransition}
+						className="flex w-full items-center gap-1"
+					>
+						{progressContent}
+					</motion.div>
+				)}
+
+				{snapshot.matches('success') && (
+					<motion.div
+						key="success"
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ y: `${reducedY}%`, opacity: 0 }}
+						transition={fadeTransition}
+						className="flex items-center gap-1"
+					>
+						{successContent}
+					</motion.div>
+				)}
+
+				{snapshot.matches('error') && (
+					<motion.div
+						key="error"
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ y: `${reducedY}%`, opacity: 0 }}
+						transition={fadeTransition}
+						className="flex items-center gap-1"
+					>
+						{errorContent}
+					</motion.div>
+				)}
+			</AnimatePresence>
 		</Button>
 	);
 };
