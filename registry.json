@@ -10,7 +10,7 @@
 			"author": "Fabio Somaglia",
 			"type": "registry:component",
 			"registryDependencies": ["button", "progress"],
-			"dependencies": ["xstate", "@xstate/react"],
+			"dependencies": ["xstate", "@xstate/react", "motion"],
 			"files": [
 				{
 					"path": "registry/new-york/ui/stateful-button/stateful-button.tsx",
