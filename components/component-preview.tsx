@@ -21,7 +21,7 @@ export function ComponentPreview({ preview, code }: ComponentPreviewProps) {
 				{preview}
 			</TabsContent>
 			<TabsContent value="code">
-				<CodeBlock lang="tsx" textSize={14} className="min-h-[450px]">
+				<CodeBlock lang="tsx" textSize={14} maxHeight={450}>
 					{code}
 				</CodeBlock>
 			</TabsContent>

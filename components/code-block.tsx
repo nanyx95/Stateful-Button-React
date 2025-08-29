@@ -56,8 +56,6 @@ export default function CodeBlock({
 		};
 	}, [codeText, lang, themes]);
 
-	const containerStyle: React.CSSProperties = maxWidth ? { maxWidth: `${maxWidth}px` } : {};
-
 	const handleCopy = useCallback(async () => {
 		try {
 			await navigator.clipboard.writeText(codeText);
@@ -69,11 +67,7 @@ export default function CodeBlock({
 	}, [codeText]);
 
 	return (
-		<div
-			className={cn('relative rounded-lg border bg-muted/40 font-mono leading-snug', className)}
-			style={containerStyle}
-			data-lang={lang}
-		>
+		<div className="relative">
 			{showCopy && (
 				<Button onClick={handleCopy} variant="ghost" size="icon" className="absolute top-2 right-2 z-10">
 					{copied ? (
@@ -91,15 +85,17 @@ export default function CodeBlock({
 			)}
 
 			<div
-				className="overflow-auto"
+				className={cn('overflow-auto rounded-lg border bg-muted/40 font-mono leading-snug', className)}
 				style={{
 					maxHeight: maxHeight ? `${maxHeight}px` : undefined,
+					maxWidth: maxWidth ? `${maxWidth}px` : undefined,
 					fontSize: textSize
 				}}
+				data-lang={lang}
 			>
 				<div className="flex">
 					{showLineNumbers && (
-						<pre className="p-4 text-right text-neutral-500 select-none">
+						<pre className="sticky left-0 z-10 bg-primary-foreground p-4 text-right text-neutral-500 select-none">
 							<code>{lineNumbers}</code>
 						</pre>
 					)}
