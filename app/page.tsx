@@ -6,6 +6,10 @@ import Demo from '@/app/_docs-sections/demo';
 import Installation from '@/app/_docs-sections/installation';
 import Usage from '@/app/_docs-sections/usage';
 import DefaultVariant from '@/app/_docs-sections/default-variant';
+import SecondaryVariant from '@/app/_docs-sections/secondary-variant';
+import DestructiveVariant from '@/app/_docs-sections/destructive-variant';
+import OutlineVariant from '@/app/_docs-sections/outline-variant';
+import GhostVariant from '@/app/_docs-sections/ghost-variant';
 
 export default function Home() {
 	return (
@@ -22,7 +26,10 @@ export default function Home() {
 
 					<h2 className="mt-12 text-2xl font-medium tracking-tight">Examples</h2>
 					<DefaultVariant />
-					<h3 className="mt-4 text-xl font-semibold tracking-tight">Secondary</h3>
+					<SecondaryVariant />
+					<DestructiveVariant />
+					<OutlineVariant />
+					<GhostVariant />
 				</main>
 			</div>
 		</>
