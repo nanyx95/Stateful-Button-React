@@ -7,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import CodeBlock from '@/components/code-block';
 import { Terminal } from 'lucide-react';
 import { useState } from 'react';
+import { codeExamples } from '@/components/code-examples';
 
 export default function Home() {
 	const [apiProgress, setApiProgress] = useState(0);
@@ -82,34 +83,7 @@ export default function Home() {
 								Load
 							</StatefulButton>
 						}
-						code={`import StatefulButton from '@/components/ui/stateful-button';
-
-// Example of a generic API call.
-// Replace these with your own fetch, axios, trpc, etc.
-const fetchData = async () => {
-  const response = await fetch('/api/endpoint');
-  if (!response.ok) throw new Error('Request failed');
-  return response.json();
-};
-
-export default function StatefulButtonDemo() {
-  return (
-    <StatefulButton
-      onClick={async () => {
-        // Trigger the API call
-        const data = await fetchData();
-        // Here you could update state, trigger notifications, or handle data
-        console.log('Received data:', data);
-      }}
-      /* Called when onClick completes successfully */
-      onComplete={() => console.log('Operation completed successfully')}
-      /* Called if the API call or onClick throws an error */
-      onError={(error) => console.error('An error occurred:', error)}
-    >
-      Load
-    </StatefulButton>
-  );
-}`}
+						code={codeExamples.statefulButtonDemo}
 					/>
 
 					<ComponentPreview
@@ -127,60 +101,7 @@ export default function StatefulButtonDemo() {
 								Progress
 							</StatefulButton>
 						}
-						code={`import { useState } from 'react';
-
-import StatefulButton from '@/components/ui/stateful-button';
-
-async function processMultiApiRequests(setProgress: (p: number) => void) {
-  const totalApis = 3;
-  let completed = 0;
-
-  // Example API calls. Replace these with your own fetch, axios, trpc, etc.
-  // You can run them in parallel as shown here or sequentially depending on your workflow.
-  const apiCalls = [
-    async () => {
-      await fetch('/api/endpoint1');
-    },
-    async () => {
-      await fetch('/api/endpoint2');
-    },
-    async () => {
-      await fetch('/api/endpoint3');
-    }
-  ];
-
-  // Run all APIs in parallel and update progress as each one finishes
-  await Promise.all(
-    apiCalls.map(async (call) => {
-      await call();
-      completed++;
-      setProgress(Math.floor((completed / totalApis) * 100));
-    })
-  );
-
-  // Ensure progress ends at 100
-  setProgress(100);
-}
-
-export function StatefulButtonProgressDemo() {
-  const [progress, setProgress] = useState(0);
-
-  return (
-    <StatefulButton
-      buttonType="progress"
-      /* Controlled progress value from 0 to 100 */
-      progress={progress}
-      /* Triggered when the button is clicked to start async logic */
-      onClick={() => processMultiApiRequests(setProgress)}
-      /* Called when all async work is done successfully */
-      onComplete={() => console.log('All APIs completed')}
-      /* Called if any error occurs during async logic */
-      onError={(error) => console.error(error)}
-    >
-      Run APIs
-    </StatefulButton>
-  );
-}`}
+						code={codeExamples.statefulButtonProgressDemo}
 					/>
 
 					<h2 className="mt-12 text-2xl font-medium tracking-tight">Installation</h2>
@@ -247,29 +168,7 @@ export function StatefulButtonProgressDemo() {
 								Load
 							</StatefulButton>
 						}
-						code={`import StatefulButton from '@/components/ui/stateful-button';
-
-// dummy success API call
-const loadingSuccessTest = () => {
-  return new Promise((resolve) => {
-    setTimeout(resolve, 4000);
-  });
-};
-
-export function StatefulButtonDefaultSuccess() {
-  return (
-    <StatefulButton
-      onClick={async () => {
-        console.log('onClick: clicked');
-        await loadingSuccessTest();
-      }}
-      onComplete={() => console.log('onComplete: completed')}
-      onError={(error) => console.error(error)}
-    >
-      Load
-    </StatefulButton>
-  );
-}`}
+						code={codeExamples.statefulButtonDefaultSuccess}
 					/>
 
 					<ComponentPreview
@@ -283,27 +182,7 @@ export function StatefulButtonDefaultSuccess() {
 								Load with error
 							</StatefulButton>
 						}
-						code={`import StatefulButton from '@/components/ui/stateful-button';
-
-// dummy failed API call
-const loadingFailedTest = () => {
-  return new Promise((_, reject) => {
-    setTimeout(() => reject(new Error('Error from dummy API call')), 4000);
-  });
-};
-
-export function StatefulButtonDefaultError() {
-  return (
-    <StatefulButton
-      onClick={loadingFailedTest}
-      onComplete={() => console.log('onComplete: completed')}
-      onError={(error) => console.error(error)}
-      className="w-32"
-    >
-      Load with error
-    </StatefulButton>
-  );
-}`}
+						code={codeExamples.statefulButtonDefaultError}
 					/>
 
 					<ComponentPreview
@@ -321,62 +200,7 @@ export function StatefulButtonDefaultError() {
 								Progress
 							</StatefulButton>
 						}
-						code={`import { useState } from 'react';
-
-import StatefulButton from '@/components/ui/stateful-button';
-
-const simulateApiRequestsProgress = async (setProgress: (p: number) => void, shouldFail = false) => {
-  // Simulation of multiple API requests with random delays and failures.
-  // In a real-world scenario, replace this with your own API calls
-  // (parallel, sequential, or whatever fits best).
-  setProgress(0);
-  const totalRequests = 7;
-  let completedRequests = 0;
-
-  const failingRequestId = shouldFail ? Math.floor(Math.random() * totalRequests) + 1 : 0;
-
-  const simulateApiRequest = (id: number) =>
-    new Promise<void>((resolve, reject) => {
-      const delay = Math.floor(Math.random() * 4000) + 1000;
-
-      setTimeout(() => {
-        if (failingRequestId === id) {
-          console.log(\`Request \${id} failed after \${delay}ms\`);
-          reject(new Error(\`Request \${id} failed\`));
-        } else {
-          console.log(\`Request \${id} completed in \${delay}ms\`);
-          completedRequests++;
-          setProgress(Math.floor((completedRequests / totalRequests) * 100));
-          resolve();
-        }
-      }, delay);
-    });
-
-  // Runs all simulated API requests in parallel using Promise.all.
-  // Other strategies (sequential execution, etc.) may be used instead.
-  await Promise.all(Array.from({ length: totalRequests }, (_, i) => simulateApiRequest(i + 1)));
-  setProgress(100);
-  console.log('All simulated API requests completed');
-};
-
-export function StatefulButtonDefaultError() {
-  const [apiProgress, setApiProgress] = useState(0);
-
-  return (
-    <StatefulButton
-      buttonType="progress"
-      progress={apiProgress}
-      onClick={async () => {
-        console.log('onClick: clicked');
-        await simulateApiRequestsProgress(setApiProgress);
-      }}
-      onComplete={() => console.log('onComplete: completed')}
-      onError={(error) => console.error(error)}
-    >
-      Progress
-    </StatefulButton>
-  );
-}`}
+						code={codeExamples.statefulButtonDefaultProgressSuccess}
 					/>
 
 					<ComponentPreview
@@ -395,63 +219,7 @@ export function StatefulButtonDefaultError() {
 								Progress with error
 							</StatefulButton>
 						}
-						code={`import { useState } from 'react';
-
-import StatefulButton from '@/components/ui/stateful-button';
-
-const simulateApiRequestsProgress = async (setProgress: (p: number) => void, shouldFail = false) => {
-  // Simulation of multiple API requests with random delays and failures.
-  // In a real-world scenario, replace this with your own API calls
-  // (parallel, sequential, or whatever fits best).
-  setProgress(0);
-  const totalRequests = 7;
-  let completedRequests = 0;
-
-  const failingRequestId = shouldFail ? Math.floor(Math.random() * totalRequests) + 1 : 0;
-
-  const simulateApiRequest = (id: number) =>
-    new Promise<void>((resolve, reject) => {
-      const delay = Math.floor(Math.random() * 4000) + 1000;
-
-      setTimeout(() => {
-        if (failingRequestId === id) {
-          console.log(\`Request \${id} failed after \${delay}ms\`);
-          reject(new Error(\`Request \${id} failed\`));
-        } else {
-          console.log(\`Request \${id} completed in \${delay}ms\`);
-          completedRequests++;
-          setProgress(Math.floor((completedRequests / totalRequests) * 100));
-          resolve();
-        }
-      }, delay);
-    });
-
-  // Runs all simulated API requests in parallel using Promise.all.
-  // Other strategies (sequential execution, etc.) may be used instead.
-  await Promise.all(Array.from({ length: totalRequests }, (_, i) => simulateApiRequest(i + 1)));
-  setProgress(100);
-  console.log('All simulated API requests completed');
-};
-
-export function StatefulButtonDefaultError() {
-  const [apiProgress, setApiProgress] = useState(0);
-
-  return (
-    <StatefulButton
-      buttonType="progress"
-      progress={apiProgress}
-      onClick={async () => {
-        console.log('onClick: clicked');
-        await simulateApiRequestsProgress(setApiProgress, true);
-      }}
-      onComplete={() => console.log('onComplete: completed')}
-      onError={(error) => console.error(error)}
-      className="w-38"
-    >
-      Progress with error
-    </StatefulButton>
-  );
-}`}
+						code={codeExamples.statefulButtonDefaultProgressError}
 					/>
 
 					<h3 className="mt-4 text-xl font-semibold tracking-tight">Secondary</h3>
