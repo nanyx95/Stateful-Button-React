@@ -134,25 +134,6 @@ const progressVariants = cva('', {
 	}
 });
 
-type BaseProps = {
-	onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void | Promise<unknown>;
-	onComplete?: () => void;
-	onError?: (error: Error) => void;
-	children?: React.ReactNode;
-} & React.ButtonHTMLAttributes<HTMLButtonElement> &
-	VariantProps<typeof buttonVariants> &
-	VariantProps<typeof progressVariants>;
-
-type SpinnerButtonProps = BaseProps & {
-	buttonType?: 'spinner';
-	progress?: never;
-};
-
-type ProgressButtonProps = BaseProps & {
-	buttonType: 'progress';
-	progress: number;
-};
-
 type AriaMessages = {
 	loading?: string;
 	progress?: (value: number) => string;
@@ -160,8 +141,27 @@ type AriaMessages = {
 	error?: string;
 };
 
-export type StatefulButtonProps = BaseProps &
-	(SpinnerButtonProps | ProgressButtonProps) & { ariaMessages?: AriaMessages };
+type BaseProps = {
+	onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void | Promise<unknown>;
+	onComplete?: () => void;
+	onError?: (error: Error) => void;
+	children?: React.ReactNode;
+	ariaMessages?: AriaMessages;
+} & React.ButtonHTMLAttributes<HTMLButtonElement> &
+	VariantProps<typeof buttonVariants> &
+	VariantProps<typeof progressVariants>;
+
+type SpinnerButtonProps = {
+	buttonType?: 'spinner';
+	progress?: never;
+};
+
+type ProgressButtonProps = {
+	buttonType: 'progress';
+	progress: number;
+};
+
+export type StatefulButtonProps = BaseProps & (SpinnerButtonProps | ProgressButtonProps);
 
 const StatefulButton: React.FC<StatefulButtonProps> = ({
 	buttonType = 'spinner',
