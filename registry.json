@@ -14,8 +14,12 @@
 			"files": [
 				{
 					"path": "registry/new-york/ui/stateful-button/stateful-button.tsx",
-					"type": "registry:component",
-					"target": "~/components/ui/stateful-button.tsx"
+					"type": "registry:ui",
+					"target": "components/ui/stateful-button.tsx"
+				},
+				{
+					"path": "registry/new-york/ui/stateful-button/stateful-button-machine.ts",
+					"type": "registry:lib"
 				}
 			]
 		}
