@@ -10,6 +10,9 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 import { motion, AnimatePresence, useReducedMotion, type Transition } from 'motion/react';
 
+const SUCCESS_TO_IDLE_DELAY = 1500;
+const ERROR_TO_IDLE_DELAY = 1500;
+
 /**
  * A finite state machine that manages the state of a stateful button.
  *
@@ -37,18 +40,19 @@ const statefulButtonMachine = setup({
 		},
 		events: {} as
 			| { type: 'click' }
-			| { type: 'setProgress'; progress: number }
+			| { type: 'updateProgress'; progress: number }
 			| { type: 'finishLoading' }
 			| { type: 'error' }
 	},
 	actions: {
-		onComplete: ({ context }) => {
-			context.onComplete?.();
-		}
+		callOnComplete: ({ context }) => context.onComplete?.(),
+		setProgress: assign(({ event }) => (event.type === 'updateProgress' ? { progress: event.progress } : {})),
+		resetProgress: assign({ progress: 0 })
 	},
 	guards: {
 		isSpinner: ({ context }) => context.buttonType === 'spinner',
-		isProgress: ({ context }) => context.buttonType === 'progress'
+		isProgress: ({ context }) => context.buttonType === 'progress',
+		isProgressComplete: ({ event }) => event.type === 'updateProgress' && event.progress >= 100
 	}
 }).createMachine({
 	id: 'statefulButton',
@@ -75,37 +79,33 @@ const statefulButtonMachine = setup({
 		},
 		progress: {
 			on: {
-				setProgress: [
+				updateProgress: [
 					{
 						target: 'success',
-						guard: ({ event }) => event.progress >= 100,
-						actions: assign({
-							progress: ({ event }) => event.progress
-						})
+						guard: 'isProgressComplete',
+						actions: ['setProgress']
 					},
 					{
-						actions: assign({
-							progress: ({ event }) => event.progress
-						})
+						actions: ['setProgress']
 					}
 				],
 				error: { target: 'error' }
 			}
 		},
 		success: {
-			entry: 'onComplete',
+			entry: [{ type: 'callOnComplete' }],
 			after: {
-				1500: {
+				[SUCCESS_TO_IDLE_DELAY]: {
 					target: 'idle',
-					actions: assign({ progress: 0 })
+					actions: ['resetProgress']
 				}
 			}
 		},
 		error: {
 			after: {
-				1500: {
+				[ERROR_TO_IDLE_DELAY]: {
 					target: 'idle',
-					actions: assign({ progress: 0 })
+					actions: ['resetProgress']
 				}
 			}
 		}
@@ -369,7 +369,7 @@ const StatefulButton: React.FC<StatefulButtonProps> = ({
 
 	React.useEffect(() => {
 		if (buttonType === 'progress' && typeof progress === 'number') {
-			send({ type: 'setProgress', progress });
+			send({ type: 'updateProgress', progress });
 		}
 	}, [progress]);
 
