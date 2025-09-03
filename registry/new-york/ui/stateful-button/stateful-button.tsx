@@ -316,30 +316,28 @@ const StatefulButton: React.FC<StatefulButtonProps> = ({
 
 	const loadingContent = (
 		<>
-			<LoaderCircle className="animate-spin" aria-hidden="true" />
+			<LoaderCircle className="animate-spin" aria-hidden="true" data-cy="spinner-icon" />
 			<span className="sr-only">{ariaMsg.loading}</span>
 		</>
 	);
 	const progressContent = (
 		<>
 			<Progress value={snapshot.context.progress} className={cn(progressVariants({ variant }))} />
-			<span className="sr-only">{ariaMsg.progress(snapshot.context.progress)}</span>
+			<span className="sr-only" data-cy="progress-value-text">
+				{ariaMsg.progress(snapshot.context.progress)}
+			</span>
 		</>
 	);
 	const successContent = (
 		<>
-			<Check aria-hidden="true" />
-			<span role="status" className="sr-only">
-				{ariaMsg.success}
-			</span>
+			<Check aria-hidden="true" data-cy="check-icon" />
+			<span className="sr-only">{ariaMsg.success}</span>
 		</>
 	);
 	const errorContent = (
 		<>
-			<X aria-hidden="true" />
-			<span role="status" className="sr-only">
-				{ariaMsg.error}
-			</span>
+			<X aria-hidden="true" data-cy="x-icon" />
+			<span className="sr-only">{ariaMsg.error}</span>
 		</>
 	);
 
@@ -353,8 +351,8 @@ const StatefulButton: React.FC<StatefulButtonProps> = ({
 			className={cn(buttonVariants({ size, className }))}
 			onClick={handleClick}
 			disabled={!snapshot.matches('idle')}
-			aria-busy={snapshot.matches('loading') || snapshot.matches('progress')}
 			aria-live="polite"
+			data-cy="stateful-button"
 			{...props}
 		>
 			<AnimatePresence mode="wait" initial={false}>
