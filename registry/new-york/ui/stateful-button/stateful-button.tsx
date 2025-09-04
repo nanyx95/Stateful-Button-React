@@ -32,7 +32,7 @@ const buttonVariants = cva(
 /**
  * CVA variants for the progress indicator.
  */
-const progressVariants = cva('', {
+const progressVariants = cva('rounded-[2.5px]', {
 	variants: {
 		variant: {
 			default:
