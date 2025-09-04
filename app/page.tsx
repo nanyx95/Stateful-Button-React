@@ -1,6 +1,5 @@
 'use client';
 
-import { ModeToggle } from '@/components/mode-toggle';
 import Intro from '@/app/_docs-sections/intro';
 import Demo from '@/app/_docs-sections/demo';
 import Installation from '@/app/_docs-sections/installation';
@@ -14,9 +13,6 @@ import GhostVariant from '@/app/_docs-sections/ghost-variant';
 export default function Home() {
 	return (
 		<>
-			<div className="fixed bottom-4 left-4">
-				<ModeToggle />
-			</div>
 			<div className="mx-auto flex min-h-svh max-w-3xl flex-col gap-8 px-4 py-8">
 				<Intro />
 				<main className="flex flex-1 flex-col gap-6">
