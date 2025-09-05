@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Check, Clipboard } from 'lucide-react';
 import { codeToHtml, type BundledLanguage, type BundledTheme } from 'shiki';
 import { cn } from '@/lib/utils';
+import clsx from 'clsx';
 
 export type CodeBlockProps = {
 	lang?: BundledLanguage;
@@ -69,7 +70,7 @@ export default function CodeBlock({
 	return (
 		<div className="relative">
 			{showCopy && (
-				<Button onClick={handleCopy} variant="ghost" size="icon" className="absolute top-2 right-2 z-10">
+				<Button onClick={handleCopy} variant="ghost" size="icon" className="absolute top-2 right-2 z-10 bg-codeblock">
 					{copied ? (
 						<>
 							<Check aria-hidden="true" />
@@ -85,7 +86,10 @@ export default function CodeBlock({
 			)}
 
 			<div
-				className={cn('overflow-auto rounded-lg border bg-muted/40 font-mono leading-snug', className)}
+				className={cn(
+					'scrollbar-hidden overflow-y-auto rounded-lg border bg-codeblock font-mono leading-snug',
+					className
+				)}
 				style={{
 					maxHeight: maxHeight ? `${maxHeight}px` : undefined,
 					maxWidth: maxWidth ? `${maxWidth}px` : undefined,
@@ -95,19 +99,22 @@ export default function CodeBlock({
 			>
 				<div className="flex">
 					{showLineNumbers && (
-						<pre className="sticky left-0 z-10 bg-primary-foreground p-4 text-right text-neutral-500 select-none">
+						<pre className="sticky left-0 z-10 bg-codeblock p-4 text-right text-muted-foreground select-none">
 							<code>{lineNumbers}</code>
 						</pre>
 					)}
-					<div className="flex-1">
+					<div className="scrollbar-hidden flex-1 overflow-x-auto">
 						{highlightedContent ? (
 							<div
-								className="[&>pre]:!border-none [&>pre]:!bg-transparent [&>pre]:!p-4"
+								className={clsx(
+									'[&>pre]:!border-none [&>pre]:!bg-transparent [&>pre]:!outline-none',
+									showLineNumbers ? '[&>pre]:!py-4' : '[&>pre]:!p-4'
+								)}
 								data-lang={lang}
 								dangerouslySetInnerHTML={{ __html: highlightedContent }}
 							/>
 						) : (
-							<pre className="p-4 text-neutral-100">
+							<pre className={clsx('text-foreground', showLineNumbers ? 'py-4' : 'p-4')}>
 								<code>{codeText}</code>
 							</pre>
 						)}
