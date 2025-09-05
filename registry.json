@@ -1,12 +1,12 @@
 {
 	"$schema": "https://ui.shadcn.com/schema/registry.json",
-	"name": "acme",
-	"homepage": "https://acme.com",
+	"name": "Stateful Button",
+	"homepage": "https://stateful-button.vercel.app",
 	"items": [
 		{
 			"name": "stateful-button",
 			"title": "Stateful Button",
-			"description": "Stateful Button description.",
+			"description": "A shadcn/ui button component that provides clear, accessible visual feedback for any asynchronous action.",
 			"author": "Fabio Somaglia",
 			"type": "registry:component",
 			"registryDependencies": ["button", "progress"],
