@@ -8,7 +8,7 @@ export default function Demo() {
 	const [apiProgress, setApiProgress] = useState(0);
 
 	return (
-		<>
+		<section className="space-y-6">
 			<ComponentPreview
 				preview={
 					<StatefulButton
@@ -42,6 +42,6 @@ export default function Demo() {
 				}
 				code={codeExamples.statefulButtonProgressDemo}
 			/>
-		</>
+		</section>
 	);
 }

@@ -12,22 +12,31 @@ import GhostVariant from '@/app/_docs-sections/ghost-variant';
 
 export default function Home() {
 	return (
-		<>
-			<div className="mx-auto flex min-h-svh max-w-3xl flex-col gap-8 px-4 py-8">
+		<main className="mx-auto max-w-3xl space-y-18 px-4 pt-2 pb-8">
+			<section className="space-y-6">
 				<Intro />
-				<main className="flex flex-1 flex-col gap-6">
-					<Demo />
-					<Installation />
-					<Usage />
-
-					<h2 className="mt-12 text-2xl font-medium tracking-tight">Examples</h2>
-					<DefaultVariant />
-					<SecondaryVariant />
-					<DestructiveVariant />
-					<OutlineVariant />
-					<GhostVariant />
-				</main>
-			</div>
-		</>
+				<Demo />
+			</section>
+			<Installation />
+			<Usage />
+			<section className="space-y-14">
+				<div className="space-y-2">
+					<h2 className="text-2xl font-medium tracking-tight">Examples</h2>
+					<p className="leading-relaxed text-primary">
+						The stateful button automatically handles success and error states based on the outcome of the{' '}
+						<code className="relative rounded-md bg-muted px-[0.3rem] py-[0.2rem] font-mono text-[0.8rem] outline-none">
+							onClick
+						</code>{' '}
+						event. If the promise resolves, the button enters a success state; if it rejects, it enters an error state.
+						The "Default" variant examples below demonstrate both scenarios.
+					</p>
+				</div>
+				<DefaultVariant />
+				<SecondaryVariant />
+				<DestructiveVariant />
+				<OutlineVariant />
+				<GhostVariant />
+			</section>
+		</main>
 	);
 }

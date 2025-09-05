@@ -4,8 +4,8 @@ import CodeBlock from '@/components/code-block';
 
 export default function Installation() {
 	return (
-		<>
-			<h2 className="mt-12 text-2xl font-medium tracking-tight">Installation</h2>
+		<section className="space-y-6">
+			<h2 className="text-2xl font-medium tracking-tight">Installation</h2>
 			<Tabs defaultValue="npm">
 				<TabsList>
 					<TabsTrigger value="icon" disabled>
@@ -39,6 +39,6 @@ export default function Installation() {
 					</CodeBlock>
 				</TabsContent>
 			</Tabs>
-		</>
+		</section>
 	);
 }

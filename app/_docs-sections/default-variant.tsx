@@ -8,16 +8,8 @@ export default function DefaultVariant() {
 	const [apiProgress, setApiProgress] = useState(0);
 
 	return (
-		<>
-			<h3 className="mt-4 text-xl font-semibold tracking-tight">Default</h3>
-			<p className="leading-relaxed">
-				The stateful button automatically handles success and error states based on the outcome of the{' '}
-				<code className="relative rounded-md bg-muted px-[0.3rem] py-[0.2rem] font-mono text-[0.8rem] outline-none">
-					onClick
-				</code>{' '}
-				event. If the promise resolves, the button enters a success state; if it rejects, it enters an error state. The
-				"Default" variant examples below demonstrate both scenarios.
-			</p>
+		<section className="space-y-6">
+			<h3 className="text-xl font-semibold tracking-tight">Default</h3>
 
 			<ComponentPreview
 				preview={
@@ -82,6 +74,6 @@ export default function DefaultVariant() {
 				}
 				code={codeExamples.statefulButtonDefaultProgressError}
 			/>
-		</>
+		</section>
 	);
 }

@@ -8,8 +8,8 @@ export default function SecondaryVariant() {
 	const [apiProgress, setApiProgress] = useState(0);
 
 	return (
-		<>
-			<h3 className="mt-4 text-xl font-semibold tracking-tight">Secondary</h3>
+		<section className="space-y-6">
+			<h3 className="text-xl font-semibold tracking-tight">Secondary</h3>
 
 			<ComponentPreview
 				preview={
@@ -43,6 +43,6 @@ export default function SecondaryVariant() {
 				}
 				code={codeExamples.statefulButtonSecondaryProgressSuccess}
 			/>
-		</>
+		</section>
 	);
 }
