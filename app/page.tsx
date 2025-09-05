@@ -28,7 +28,7 @@ export default function Home() {
 							onClick
 						</code>{' '}
 						event. If the promise resolves, the button enters a success state; if it rejects, it enters an error state.
-						The "Default" variant examples below demonstrate both scenarios.
+						The &quot;Default&quot; variant examples below demonstrate both scenarios.
 					</p>
 				</div>
 				<DefaultVariant />

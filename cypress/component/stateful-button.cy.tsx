@@ -33,7 +33,7 @@ describe('<StatefulButton />', () => {
 	});
 
 	it('should transition from idle to loading, then to success, and finally back to idle when the asynchronous onClick handler resolves', () => {
-		let resolvePromise: (value?: unknown) => void;
+		let resolvePromise: () => void;
 		const promise = new Cypress.Promise((resolve) => (resolvePromise = resolve));
 
 		const onClickStub = cy.stub().as('onClickStub').returns(promise);
@@ -68,7 +68,7 @@ describe('<StatefulButton />', () => {
 	});
 
 	it('should transition from idle to loading, then to error, and finally back to idle when the asynchronous onClick handler rejects', () => {
-		let rejectPromise: (reason?: any) => void;
+		let rejectPromise: (reason: Error) => void;
 		const promise = new Cypress.Promise((_, reject) => (rejectPromise = reject));
 
 		const onClickStub = cy.stub().as('onClickStub').returns(promise);
@@ -157,7 +157,7 @@ describe('<StatefulButton />', () => {
 	});
 
 	it('should transition from idle to progress, then to error, and finally back to idle when a progress-based asynchronous operation fails', () => {
-		let rejectPromise: (reason?: any) => void;
+		let rejectPromise: (reason: Error) => void;
 		const promise = new Cypress.Promise((_, reject) => (rejectPromise = reject));
 
 		const onClickStub = cy.stub().as('onClickStub').returns(promise);
