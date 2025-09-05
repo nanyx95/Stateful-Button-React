@@ -20,22 +20,22 @@ export default function Installation() {
 				</TabsList>
 				<TabsContent value="pnpm">
 					<CodeBlock lang="bash" textSize={14} showLineNumbers={false}>
-						{`pnpm dlx shadcn@latest add http://localhost:3000/r/stateful-button.json`}
+						{`pnpm dlx shadcn@latest add https://stateful-button.vercel.app/r/stateful-button.json`}
 					</CodeBlock>
 				</TabsContent>
 				<TabsContent value="npm">
 					<CodeBlock lang="bash" textSize={14} showLineNumbers={false}>
-						{`npx shadcn@latest add http://localhost:3000/r/stateful-button.json`}
+						{`npx shadcn@latest add https://stateful-button.vercel.app/r/stateful-button.json`}
 					</CodeBlock>
 				</TabsContent>
 				<TabsContent value="yarn">
 					<CodeBlock lang="bash" textSize={14} showLineNumbers={false}>
-						{`yarn shadcn@latest add http://localhost:3000/r/stateful-button.json`}
+						{`yarn shadcn@latest add https://stateful-button.vercel.app/r/stateful-button.json`}
 					</CodeBlock>
 				</TabsContent>
 				<TabsContent value="bun">
 					<CodeBlock lang="bash" textSize={14} showLineNumbers={false}>
-						{`bunx --bun shadcn@latest add http://localhost:3000/r/stateful-button.json`}
+						{`bunx --bun shadcn@latest add https://stateful-button.vercel.app/r/stateful-button.json`}
 					</CodeBlock>
 				</TabsContent>
 			</Tabs>

@@ -2,7 +2,7 @@
 
 > A **shadcn/ui** button component that provides clear, accessible visual feedback for any asynchronous action.
 
-**[Live demo →](https://stateful-button.com)**
+**[Live demo →](https://stateful-button.vercel.app)**
 
 ## Features
 
@@ -17,7 +17,7 @@
 Add the `StatefulButton` to your project using the **shadcn/ui CLI**:
 
 ```bash
-npx shadcn-ui@latest add stateful-button
+npx shadcn@latest add https://stateful-button.vercel.app/r/stateful-button.json
 ```
 
 This will add `stateful-button.tsx` to your `components/ui` directory and `stateful-button-machine.ts` to your `lib` directory.
@@ -54,14 +54,18 @@ This is the default mode. The button shows a spinner while the `onClick` handler
 ```tsx
 import StatefulButton from '@/components/ui/stateful-button';
 
-<StatefulButton
-	onClick={async () => {
-		// Simulate an API call
-		await new Promise((resolve) => setTimeout(resolve, 2000));
-	}}
->
-	Save
-</StatefulButton>;
+export default function SaveExample() {
+	return (
+		<StatefulButton
+			onClick={async () => {
+				// Simulate an API call
+				await new Promise((resolve) => setTimeout(resolve, 2000));
+			}}
+		>
+			Save
+		</StatefulButton>
+	);
+}
 ```
 
 ### Progress Mode
@@ -169,4 +173,4 @@ To run this project locally, follow these steps:
 
 ## License
 
-Licensed under the [MIT license](LICENSE).
+Licensed under the [MIT license](LICENSE.md).
