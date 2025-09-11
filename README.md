@@ -1,6 +1,6 @@
 # Stateful Button for shadcn/ui
 
-> A **shadcn/ui** button component that provides clear, accessible visual feedback for any asynchronous action.
+> A **shadcn/ui** button component that provides clear visual feedback with full accessibility support for any asynchronous action.
 
 **[Live demo →](https://stateful-button.vercel.app)**
 
