@@ -4,7 +4,7 @@
   "type": "registry:component",
   "title": "Stateful Button",
   "author": "Fabio Somaglia",
-  "description": "A shadcn/ui button component that provides clear, accessible visual feedback for any asynchronous action.",
+  "description": "A shadcn/ui button component that provides clear visual feedback with full accessibility support for any asynchronous action.",
   "dependencies": [
     "xstate",
     "@xstate/react",
