@@ -19,7 +19,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
 	title: 'Stateful Button React',
 	description:
-		'A shadcn/ui button component that provides clear, accessible visual feedback for any asynchronous action.'
+		'A shadcn/ui button component that provides clear visual feedback with full accessibility support for any asynchronous action.'
 };
 
 export default function RootLayout({
