@@ -1,11 +1,14 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { codeExamples } from '@/app/_code-examples';
 import { ComponentPreview } from '@/components/component-preview';
 import { loadingSuccessTest, simulateApiRequestsProgress } from '@/lib/api-simulation';
 import StatefulButton from '@/registry/new-york/ui/stateful-button/stateful-button';
+import { Rocket } from 'lucide-react';
+import { UploadIcon, type UploadIconHandle } from '@/components/ui/upload';
 
 export default function Demo() {
 	const [apiProgress, setApiProgress] = useState(0);
+	const uploadIconRef = useRef<UploadIconHandle>(null);
 
 	return (
 		<section className="space-y-6">
@@ -18,8 +21,10 @@ export default function Demo() {
 						}}
 						onComplete={() => console.log('onComplete: completed')}
 						onError={(error) => console.error(error)}
+						className="group"
 					>
-						Load
+						Launch
+						<Rocket className="group-hover:animate-shake-and-launch" />
 					</StatefulButton>
 				}
 				code={codeExamples.statefulButtonDemo}
@@ -36,8 +41,11 @@ export default function Demo() {
 						}}
 						onComplete={() => console.log('onComplete: completed')}
 						onError={(error) => console.error(error)}
+						onMouseEnter={() => uploadIconRef.current?.startAnimation()}
+						onMouseLeave={() => uploadIconRef.current?.stopAnimation()}
 					>
-						Progress
+						Upload
+						<UploadIcon ref={uploadIconRef} />
 					</StatefulButton>
 				}
 				code={codeExamples.statefulButtonProgressDemo}

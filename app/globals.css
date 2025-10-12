@@ -3,6 +3,50 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@theme {
+	--animate-shake-and-launch: shake-and-launch 1.7s ease-in-out;
+
+	@keyframes shake-and-launch {
+		0%,
+		50% {
+			transform: translate(0px, 0px);
+		}
+		5%,
+		15%,
+		25%,
+		35%,
+		45% {
+			transform: translate(0.5px, 0.5px);
+		}
+		10%,
+		20%,
+		30%,
+		40% {
+			transform: translate(-0.5px, -0.5px);
+		}
+		60% {
+			opacity: 1;
+		}
+		75% {
+			opacity: 0.5;
+		}
+		92% {
+			transform: translate(40px, -40px);
+			opacity: 0;
+		}
+		93% {
+			transform: translate(0px, 0px);
+			opacity: 0;
+		}
+		98% {
+			opacity: 0;
+		}
+		100% {
+			opacity: 1;
+		}
+	}
+}
+
 @theme inline {
 	--color-background: var(--background);
 	--color-foreground: var(--foreground);
