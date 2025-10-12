@@ -4,6 +4,10 @@
 
 **[Live demo →](https://stateful-button.vercel.app)**
 
+## Preview
+
+![Stateful Button preview](https://github.com/user-attachments/assets/1e45a9cd-9ad2-426d-a08d-77519c79521f)
+
 ## Features
 
 - **Multiple states:** `idle`, `loading` / `progress`, `success`, `error`
@@ -52,7 +56,7 @@ The Stateful Button supports two modes: **spinner** and **progress**.
 This is the default mode. The button shows a spinner while the `onClick` handler is executing.
 
 ```tsx
-import StatefulButton from '@/components/ui/stateful-button';
+import { StatefulButton } from '@/components/ui/stateful-button';
 
 export default function SaveExample() {
 	return (
@@ -74,7 +78,7 @@ In this mode, the button displays a progress bar. The `progress` prop must be a 
 
 ```tsx
 import React from 'react';
-import StatefulButton from '@/components/ui/stateful-button';
+import { StatefulButton } from '@/components/ui/stateful-button';
 
 export default function UploadExample() {
 	const [progress, setProgress] = React.useState(0);
@@ -104,18 +108,18 @@ export default function UploadExample() {
 
 The `StatefulButton` component extends standard HTML button attributes and shadcn/ui's button variants, in addition to its own specific props:
 
-| Prop                         | Type                                                                       | Description                                                                                                                                       |
-| ---------------------------- | -------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `onClick`                    | `(event: React.MouseEvent<HTMLButtonElement>) => void \| Promise<unknown>` | Click handler invoked when the button is pressed. Can return a `Promise` if the click handler is asynchronous.                                    |
-| `onComplete`                 | `() => void`                                                               | Callback triggered when the action completes successfully.                                                                                        |
-| `onError`                    | `(error: Error) => void`                                                   | Callback triggered when `onClick` throws (or a rejection occurs).                                                                                 |
-| `buttonType`                 | `'spinner' \| 'progress'`                                                  | Specifies the button's behavior mode. `'spinner'` (default) shows a loading spinner. `'progress'` displays a progress bar.                        |
-| `progress`                   | `number`                                                                   | The current progress value (0-100). This is a controlled prop used to update the progress bar. Only applicable when `buttonType` is `'progress'`. |
-| `children`                   | `React.ReactNode`                                                          | Content to render inside the button while in the `idle` state.                                                                                    |
-| `ariaMessages`               | `AriaMessages`                                                             | Customizable ARIA messages for accessibility. Defaults are provided if not supplied.                                                              |
-| `variant`                    | `string`                                                                   | The visual style of the button (e.g., `default`, `destructive`, `outline`). Inherited from shadcn/ui's Button component.                          |
-| `size`                       | `string`                                                                   | The size of the button (e.g., `default`, `sm`, `lg`). Inherited from shadcn/ui's Button component.                                                |
-| ...other native button props | `React.ButtonHTMLAttributes<HTMLButtonElement>`                            | All standard HTML button attributes are supported.                                                                                                |
+| Prop                         | Type                                                                       | Default                                  | Description                                                                                                                                       |
+| ---------------------------- | -------------------------------------------------------------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `onClick`                    | `(event: React.MouseEvent<HTMLButtonElement>) => void \| Promise<unknown>` | -                                        | Click handler invoked when the button is pressed. Can return a `Promise` if the click handler is asynchronous.                                    |
+| `onComplete`                 | `() => void`                                                               | -                                        | Callback triggered when the action completes successfully.                                                                                        |
+| `onError`                    | `(error: Error) => void`                                                   | -                                        | Callback triggered when `onClick` throws (or a rejection occurs).                                                                                 |
+| `buttonType`                 | `'spinner' \| 'progress'`                                                  | `'spinner'`                              | Specifies the button's behavior mode. `'spinner'` shows a loading spinner. `'progress'` displays a progress bar.                                  |
+| `progress`                   | `number`                                                                   | -                                        | The current progress value (0-100). This is a controlled prop used to update the progress bar. Only applicable when `buttonType` is `'progress'`. |
+| `children`                   | `React.ReactNode`                                                          | -                                        | Content to render inside the button while in the `idle` state.                                                                                    |
+| `ariaMessages`               | `AriaMessages`                                                             | Default English messages for all states. | Customizable ARIA messages for accessibility.                                                                                                     |
+| `variant`                    | `string`                                                                   | `'default'`                              | The visual style of the button (e.g., `default`, `destructive`, `outline`). Inherited from shadcn/ui's Button component.                          |
+| `size`                       | `string`                                                                   | `'default'`                              | The size of the button (e.g., `default`, `sm`, `lg`). Inherited from shadcn/ui's Button component.                                                |
+| ...other native button props | `React.ButtonHTMLAttributes<HTMLButtonElement>`                            | -                                        | All standard HTML button attributes are supported.                                                                                                |
 
 ## State Management
 
