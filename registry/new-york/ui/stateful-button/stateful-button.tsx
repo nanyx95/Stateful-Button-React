@@ -269,6 +269,9 @@ const StatefulButton: React.FC<StatefulButtonProps> = ({
 		if (buttonType === 'progress' && typeof progress === 'number') {
 			send({ type: 'updateProgress', progress });
 		}
+		/* eslint-disable-next-line react-hooks/exhaustive-deps --
+		 * buttonType is a stable string literal, and send is stable from useMachine
+		 **/
 	}, [progress]);
 
 	/**
