@@ -1,4 +1,4 @@
-export const statefulButtonDemo = `import StatefulButton from '@/components/ui/stateful-button';
+export const statefulButtonDemo = `import { StatefulButton } from '@/components/ui/stateful-button';
 
 // Example of a generic API call.
 // Replace these with your own fetch, axios, trpc, etc.

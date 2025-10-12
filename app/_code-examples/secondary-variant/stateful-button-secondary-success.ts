@@ -1,4 +1,4 @@
-export const statefulButtonSecondarySuccess = `import StatefulButton from '@/components/ui/stateful-button';
+export const statefulButtonSecondarySuccess = `import { StatefulButton } from '@/components/ui/stateful-button';
 
 // dummy success API call
 const loadingSuccessTest = () => {

@@ -1,4 +1,4 @@
-export const statefulButtonDefaultError = `import StatefulButton from '@/components/ui/stateful-button';
+export const statefulButtonDefaultError = `import { StatefulButton } from '@/components/ui/stateful-button';
 
 // dummy failed API call
 const loadingFailedTest = () => {

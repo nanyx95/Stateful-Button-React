@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { codeExamples } from '@/app/_code-examples';
 import { ComponentPreview } from '@/components/component-preview';
 import { loadingSuccessTest, simulateApiRequestsProgress } from '@/lib/api-simulation';
-import StatefulButton from '@/registry/new-york/ui/stateful-button/stateful-button';
+import { StatefulButton } from '@/registry/new-york/ui/stateful-button/stateful-button';
 import { Rocket } from 'lucide-react';
 import { UploadIcon, type UploadIconHandle } from '@/components/ui/upload';
 

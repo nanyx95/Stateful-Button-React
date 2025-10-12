@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { codeExamples } from '@/app/_code-examples';
 import { ComponentPreview } from '@/components/component-preview';
 import { loadingSuccessTest, loadingFailedTest, simulateApiRequestsProgress } from '@/lib/api-simulation';
-import StatefulButton from '@/registry/new-york/ui/stateful-button/stateful-button';
+import { StatefulButton } from '@/registry/new-york/ui/stateful-button/stateful-button';
 
 export default function DefaultVariant() {
 	const [apiProgress, setApiProgress] = useState(0);

@@ -1,6 +1,6 @@
 export const statefulButtonProgressDemo = `import { useState } from 'react';
 
-import StatefulButton from '@/components/ui/stateful-button';
+import { StatefulButton } from '@/components/ui/stateful-button';
 
 async function processMultiApiRequests(setProgress: (p: number) => void) {
   const totalApis = 3;

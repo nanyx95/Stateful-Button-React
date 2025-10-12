@@ -1,5 +1,5 @@
 import React from 'react';
-import StatefulButton from '@/registry/new-york/ui/stateful-button/stateful-button';
+import { StatefulButton } from '@/registry/new-york/ui/stateful-button/stateful-button';
 import { SELECTORS } from '../support/test-utils';
 
 describe('<StatefulButton />', () => {

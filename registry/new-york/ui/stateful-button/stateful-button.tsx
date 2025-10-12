@@ -179,7 +179,7 @@ type ProgressButtonProps = {
  * @see {@link SpinnerButtonProps} for the default spinner mode.
  * @see {@link ProgressButtonProps} for the progress bar mode.
  */
-export type StatefulButtonProps = BaseProps & (SpinnerButtonProps | ProgressButtonProps);
+type StatefulButtonProps = BaseProps & (SpinnerButtonProps | ProgressButtonProps);
 
 /**
  * A stateful button that provides visual feedback for different states, such as
@@ -428,4 +428,4 @@ const StatefulButton: React.FC<StatefulButtonProps> = ({
 	);
 };
 
-export default StatefulButton;
+export { StatefulButton, type StatefulButtonProps, type AriaMessages };

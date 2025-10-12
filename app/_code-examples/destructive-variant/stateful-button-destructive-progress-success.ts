@@ -1,6 +1,6 @@
 export const statefulButtonDestructiveProgressSuccess = `import { useState } from 'react';
 
-import StatefulButton from '@/components/ui/stateful-button';
+import { StatefulButton } from '@/components/ui/stateful-button';
 
 const simulateApiRequestsProgress = async (setProgress: (p: number) => void, shouldFail = false) => {
   // Simulation of multiple API requests with random delays and failures.
