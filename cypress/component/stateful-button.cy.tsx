@@ -111,7 +111,9 @@ describe('<StatefulButton />', () => {
 
 		const SBTestComponent = () => {
 			const [progress, currentSetProgress] = React.useState(0);
-			setProgress = currentSetProgress;
+			React.useEffect(() => {
+				setProgress = currentSetProgress;
+			}, []);
 
 			return (
 				<StatefulButton
@@ -168,7 +170,9 @@ describe('<StatefulButton />', () => {
 
 		const SBTestComponent = () => {
 			const [progress, currentSetProgress] = React.useState(0);
-			setProgress = currentSetProgress;
+			React.useEffect(() => {
+				setProgress = currentSetProgress;
+			}, []);
 
 			return (
 				<StatefulButton
