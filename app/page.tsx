@@ -9,6 +9,8 @@ import SecondaryVariant from '@/app/_docs-sections/secondary-variant';
 import DestructiveVariant from '@/app/_docs-sections/destructive-variant';
 import OutlineVariant from '@/app/_docs-sections/outline-variant';
 import GhostVariant from '@/app/_docs-sections/ghost-variant';
+import ApiReference from '@/app/_docs-sections/api-reference';
+import { InlineCode } from '@/components/ui/inline-code';
 
 export default function Home() {
 	return (
@@ -24,11 +26,9 @@ export default function Home() {
 					<h2 className="text-2xl font-medium tracking-tight">Examples</h2>
 					<p className="leading-relaxed text-primary">
 						The stateful button automatically handles success and error states based on the outcome of the{' '}
-						<code className="relative rounded-md bg-muted px-[0.3rem] py-[0.2rem] font-mono text-[0.8rem] outline-none">
-							onClick
-						</code>{' '}
-						event. If the promise resolves, the button enters a success state; if it rejects, it enters an error state.
-						The &quot;Default&quot; variant examples below demonstrate both scenarios.
+						<InlineCode>onClick</InlineCode> event. If the promise resolves, the button enters a success state; if it
+						rejects, it enters an error state. The &quot;Default&quot; variant examples below demonstrate both
+						scenarios.
 					</p>
 				</div>
 				<DefaultVariant />
@@ -37,6 +37,7 @@ export default function Home() {
 				<OutlineVariant />
 				<GhostVariant />
 			</section>
+			<ApiReference />
 		</main>
 	);
 }
