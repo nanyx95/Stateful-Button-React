@@ -36,15 +36,14 @@ const progressVariants = cva('rounded-[2.5px]', {
 	variants: {
 		variant: {
 			default:
-				'bg-neutral-50/20 dark:bg-neutral-900/20 [&>[data-slot=progress-indicator]]:bg-neutral-50 [&>[data-slot=progress-indicator]]:dark:bg-neutral-900',
-			destructive:
-				'bg-neutral-900/20 dark:bg-neutral-50/20 [&>[data-slot=progress-indicator]]:bg-neutral-900 [&>[data-slot=progress-indicator]]:dark:bg-neutral-50',
+				'bg-neutral-50/20 dark:bg-neutral-900/20 *:data-[slot=progress-indicator]:bg-neutral-50 *:data-[slot=progress-indicator]:dark:bg-neutral-900',
+			destructive: 'bg-neutral-50/20 *:data-[slot=progress-indicator]:bg-neutral-50',
 			outline:
-				'bg-neutral-900/20 dark:bg-neutral-50/20 [&>[data-slot=progress-indicator]]:bg-neutral-900 [&>[data-slot=progress-indicator]]:dark:bg-neutral-50',
+				'bg-neutral-900/20 dark:bg-neutral-50/20 *:data-[slot=progress-indicator]:bg-neutral-900 *:data-[slot=progress-indicator]:dark:bg-neutral-50',
 			secondary:
-				'bg-neutral-900/20 dark:bg-neutral-50/20 [&>[data-slot=progress-indicator]]:bg-neutral-900 [&>[data-slot=progress-indicator]]:dark:bg-neutral-50',
+				'bg-neutral-900/20 dark:bg-neutral-50/20 *:data-[slot=progress-indicator]:bg-neutral-900 *:data-[slot=progress-indicator]:dark:bg-neutral-50',
 			ghost:
-				'bg-neutral-900/20 dark:bg-neutral-50/20 [&>[data-slot=progress-indicator]]:bg-neutral-900 [&>[data-slot=progress-indicator]]:dark:bg-neutral-50'
+				'bg-neutral-900/20 dark:bg-neutral-50/20 *:data-[slot=progress-indicator]:bg-neutral-900 *:data-[slot=progress-indicator]:dark:bg-neutral-50'
 		}
 	},
 	defaultVariants: {
